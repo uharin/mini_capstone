@@ -6,13 +6,15 @@ class Product < ApplicationRecord
 
   def as_json
     {
+    id: id,
     name: name,
     price: price,
     vendor: vendor,
     description: description,
     discounted: is_discounted,
     tax: tax,
-    total: total
+    total: total,
+    in_stock: in_stock
     }
   end
 
@@ -24,6 +26,7 @@ class Product < ApplicationRecord
     end
   end
 
+
   def tax
     tax = price * (0.09)
     p tax
@@ -34,3 +37,59 @@ class Product < ApplicationRecord
   end
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Class Person
+
+# name: string
+# age: integer
+# hair_color: string 
+# eye_color: string
+
+
+
+# alex = Person.new(name: "Alex", age: 30, hair_color: "brown", eye_color: "brown")
+
+
+
+
+
+
+
+
+
+
+
