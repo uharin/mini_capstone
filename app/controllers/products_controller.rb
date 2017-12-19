@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_admin, only: [:create, :update, :destroy]
+
   def index
     the_search_term = params[:search_term]
     all_products = Product.order(:id).where("name LIKE ?", "%#{the_search_term}%")
@@ -15,7 +17,7 @@ class ProductsController < ApplicationController
     product = Product.new({
     name: params[:name],
     price: params[:price],
-    vendor: params[:vendor],
+    supplier: params[:supplier],
     description: params[:description],
     in_stock: params[:in_stock]
   })
@@ -31,7 +33,7 @@ class ProductsController < ApplicationController
     product = Product.find_by(id:product_id)
     product.name = params['name']
     product.price = params['price']
-    product.vendor = params['vendor']
+    product.supplier = params['supplier']
     product.description = params['description']
     if product.save
       render json: product.as_json
@@ -46,21 +48,3 @@ class ProductsController < ApplicationController
     product.destroy
   end
 end
-
-
-# not REST
-  # def get_item
-  #   user_choice = params[:name]
-  #   user_item = Product.find_by("name" =>[user_choice])
-  #   render json: {
-  #     message: user_item
-  #   }
-  # end
-
-  # def get_item2
-  #   item_choice = params[:item_input]
-  #   user_item = Product.find_by("name"=>[item_choice])
-  #   render json: {
-  #     item: user_item
-  #   }
-    #  item = ModelName.find_by(attribute_1: “some value”)

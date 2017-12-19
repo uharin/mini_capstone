@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  post 'user_token' => 'user_token#create'
   # products routes
 
   get '/products' => 'products#index'
@@ -16,4 +17,12 @@ Rails.application.routes.draw do
   patch '/suppliers/:id' => 'suppliers#update'
   delete '/suppliers/:id' => 'suppliers#destroy'
 
+  # users routes
+
+  post '/users' => 'users#create'
+
+  # order routes
+
+  post '/orders' => 'orders#create'
+  get '/orders' => 'orders#index'
 end

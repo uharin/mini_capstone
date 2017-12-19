@@ -6,17 +6,19 @@ class Product < ApplicationRecord
 
 # VALIDATIONS
 # ------------------------------------------------------------------
-
+  belongs_to :supplier
+  belongs_to :categoryproduct
+  has_many :images
+  has_many :orders
 
   validates :price, numericality: true
   validates :price, presence: true
   validates :name, uniqueness: true
   validates :name, presence: true
-  validates :vendor, presence: true
   validates :in_stock, presence: true
   validates :description, presence: true
   validates :description, length: {maximum: 200}
-  validates :description, length: {minimum: 20} 
+  validates :description, length: {minimum: 20}
 
 # CLASS METHODS
 # ------------------------------------------------------------------
@@ -43,12 +45,9 @@ class Product < ApplicationRecord
     tax: tax,
     total: total,
     in_stock: in_stock,
-    supplier: supplier
+    supplier: supplier.as_json,
+    images: images
     }
-  end
-
-  def supplier
-    Supplier.find_by(id: supplier_id)
   end
 
   def is_discounted
@@ -59,14 +58,17 @@ class Product < ApplicationRecord
     end
   end
 
-
+  def subtotal
+    subtotal = price
+  end
+  
   def tax
     tax = price * (0.09)
     p tax
   end
 
   def total
-    total = price + tax
+    total = subtotal + tax
   end
 
 end
