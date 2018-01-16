@@ -4,13 +4,17 @@ class Product < ApplicationRecord
 # name -> unique
 # description -> minimum of 10 characters
 
-# VALIDATIONS
+# DB RELATIONSHIPS
 # ------------------------------------------------------------------
   belongs_to :supplier
-  belongs_to :categoryproduct
+  has_many :category_products
+  has_many :categories, through: :category_products
   has_many :images
-  has_many :orders
+  has_many :carted_products
+  has_many :orders, through: :carted_products
 
+# VALIDATIONS
+# ------------------------------------------------------------------
   validates :price, numericality: true
   validates :price, presence: true
   validates :name, uniqueness: true
@@ -46,6 +50,7 @@ class Product < ApplicationRecord
     total: total,
     in_stock: in_stock,
     supplier: supplier.as_json,
+    categories: categories.as_json,
     images: images
     }
   end

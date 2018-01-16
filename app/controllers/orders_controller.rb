@@ -12,12 +12,10 @@ class OrdersController < ApplicationController
 
   def create
     order = Order.new({
-      product_id: params[:product_id],
-      quantity: params[:quantity],
       user_id: current_user[:id], 
-      subtotal: Product.find_by(id: params[:product_id]).subtotal * params[:quantity].to_i,
-      tax: Product.find_by(id: params[:product_id]).tax * params[:quantity].to_i,
-      total: Product.find_by(id: params[:product_id]).total * params[:quantity].to_i
+      subtotal: 
+      tax: 
+      total: 
     })
     if order.save
       render json: order.as_json

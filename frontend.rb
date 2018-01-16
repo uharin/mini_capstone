@@ -8,15 +8,17 @@ while true
   p "Choose an option"
   p "[1] see all products"
   p "[1.1] search products"
+  p "[1.2] lookup products by category"
   p "[2] see a particular product"
   p "[3] add a product"
   p "[4] edit a product"
   p "[5] delete a product"
   p "[6] create a user"
-  p "[7] create an order"
+  p "[7] add product to cart"
   p "[8] login"
   p "[9] logout"
   p "[10] show all orders"
+  p "[11] show all carted products"
   p "[0] to exit"
   user_input = gets.chomp
 
@@ -31,6 +33,12 @@ while true
     response = Unirest.get("#{base_url}/products", parameters: {search_term: search_input})
     product_list = response.body
     pp product_list
+
+  elsif user_input == "1.2"
+    p "Please enter the category ID for which you'd like to see view products"
+    category_id_input = gets.chomp.to_i
+    response = Unirest.get("#{base_url}/products", parameters: {category_id: category_id_input})
+    pp response.body
 
   elsif user_input == "2"
     p "Enter the ID for the product you wish to view"
@@ -95,13 +103,12 @@ while true
 
   elsif user_input == "7"
     the_parameters = {}
-    p "Create an order"
+    p "Add items to cart"
     p "Please enter a product ID"
     the_parameters['product_id'] = gets.chomp
     p "Please enter a quantity"
     the_parameters['quantity'] = gets.chomp
-  # Leaving off here until Sunday...
-    response = Unirest.post("#{base_url}/orders", parameters: the_parameters)
+    response = Unirest.post("#{base_url}/carted_products", parameters: the_parameters)
     pp response.body
 
   elsif user_input == "8"
@@ -113,7 +120,7 @@ while true
       }
     }
     )
-
+      
     jwt = response.body["jwt"]
 
     Unirest.default_header("Authorization", "Bearer #{jwt}")
@@ -130,6 +137,10 @@ while true
     response = Unirest.get("#{base_url}/orders")
     pp response.body
 
+  elsif user_input == "11"
+    response = Unirest.get("#{base_url}/carted_products")
+    pp response.body
+    
   elsif user_input == "0"
     break
   end

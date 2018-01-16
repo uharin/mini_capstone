@@ -1,4 +1,4 @@
 class CategoryProduct < ApplicationRecord
-  has_many :product
-  has_many :category
+  belongs_to :product
+  belongs_to :category
 end
