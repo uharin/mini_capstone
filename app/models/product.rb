@@ -6,7 +6,7 @@ class Product < ApplicationRecord
 
 # DB RELATIONSHIPS
 # ------------------------------------------------------------------
-  belongs_to :supplier
+  # belongs_to :supplier
   has_many :category_products
   has_many :categories, through: :category_products
   has_many :images
@@ -15,14 +15,14 @@ class Product < ApplicationRecord
 
 # VALIDATIONS
 # ------------------------------------------------------------------
-  validates :price, numericality: true
-  validates :price, presence: true
-  validates :name, uniqueness: true
-  validates :name, presence: true
-  validates :in_stock, presence: true
-  validates :description, presence: true
-  validates :description, length: {maximum: 200}
-  validates :description, length: {minimum: 20}
+  # validates :price, numericality: true
+  # validates :price, presence: true
+  # validates :name, uniqueness: true
+  # validates :name, presence: true
+  # validates :in_stock, presence: true
+  # validates :description, presence: true
+  # validates :description, length: {maximum: 200}
+  # validates :description, length: {minimum: 20}
 
 # CLASS METHODS
 # ------------------------------------------------------------------
@@ -49,7 +49,7 @@ class Product < ApplicationRecord
     tax: tax,
     total: total,
     in_stock: in_stock,
-    supplier: supplier.as_json,
+    # supplier: supplier.as_json,
     categories: categories.as_json,
     images: images
     }
