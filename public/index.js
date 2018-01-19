@@ -8,7 +8,11 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      products: []
+      products: [],
+      searchTerm: "",
+      searchDesc: "",
+      sortAttribute: "name",
+      sortAsc: true
     };
   },
   created: function() {
@@ -18,9 +22,34 @@ var HomePage = {
     }.bind(this)
     );
   },
-  methods: {},
-  computed: {}
+  methods: {
+    isValidProductName: function(inputProduct) {
+      return inputProduct.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+    },
+    isValidProductDesc: function(inputDesc) {
+      return inputDesc.description.includes(this.searchDesc);
+    },
+    writeAttribute: function(inputAttribute) {
+      this.sortAsc = !this.sortAsc;
+      this.sortAttribute = inputAttribute;
+    }
+  },
+  computed: {
+    sortedProducts: function() {
+      if (this.sortAsc) {
+        return this.products.sort(function(product1, product2) {
+          return product1[this.sortAttribute].localeCompare(product2[this.sortAttribute]);
+        }.bind(this));
+      } else {
+        return this.products.sort(function(product1, product2) {
+          return product2[this.sortAttribute].localeCompare(product1[this.sortAttribute]);
+        }.bind(this));
+      }
+    }
+  }
 };
+
+
 
 
 

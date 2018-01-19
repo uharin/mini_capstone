@@ -3,7 +3,7 @@
 <!-- =========================== -->
 <!-- HEAD -->
 <!-- =========================== -->
-
+ 
 <head>
   <meta charset="UTF-8">
   <title>My App</title>
@@ -90,17 +90,27 @@
 
 <template id="home-page">
   <div class="vue-component">
-    <div class="row">
-      <div class="col-sm-12">
-        <template id="card">
-          <div class="card-body" v-for="product in products">
-            <h5 class="card-title name"> {{ product.name }}</h5>
-            <p class="card-text price"> {{ product.price }}</p>
-            <p class="card-text description"> {{ product.description }}</p>
-            <p class="card-text in-stock"> {{ product.in_stock }}</p>
-            <img src="images/Hyrule_Warriors_Items_Hookshot_(Item).png">
-            <a href="#" class="btn btn-primary">Buy Item</a>
-          </div>
+    <input type="text" v-model="searchTerm" list="products">
+    <datalist id="products">
+      <option v-for="product in products"> {{product.name}}</option>
+    </datalist>
+    <input type="text" v-model="searchDesc">
+    <hr>
+    <button v-on:click="writeAttribute('name')">Sort by Name</button>
+    <button v-on:click="writeAttribute('description')">Sort by Description</button>
+      <div class="row">
+        <div class="col-sm-12">
+          <template id="card">
+            <transition-group name="bounce">
+              <div class="card-body" v-for="product in sortedProducts" v-bind:key="product.id" v-if="isValidProductName(product)">
+                <h5 class="card-title name"> {{ product.name }}</h5>
+                <p class="card-text price"> {{ product.price }}</p>
+                <p class="card-text description" v-if="isValidProductName(product)"> {{ product.description }}</p>
+                <p class="card-text in-stock"> {{ product.in_stock }}</p>
+                <img src="images/Hyrule_Warriors_Items_Hookshot_(Item).png">
+                <a href="#" class="btn btn-primary">Buy Item</a>
+            </transition-group>    
+            </div>
         </template>
       </div>
     </div>
